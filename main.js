@@ -1,20 +1,16 @@
-import { fetchAndPaintItems, filterChoosedChannels, getSelectChannels, URLS } from "./data";
-import { showFontsUI, showUi } from "./js/Ui";
+import { fetchAndShowItems, fetchAndShowChannelList } from "./data";
+import { darkLightMode, fakeSpa, showBookMarks } from "./js/Ui";
 
-function feed() {
-  const userChoosedChanels = getSelectChannels();
-  const getUserChoosedChanelsURLS = filterChoosedChannels(URLS, userChoosedChanels);
-  if (getUserChoosedChanelsURLS == "") {
-    document.getElementById("feed").innerHTML = `<h1>Elige un canal de noticias</h1>`;
-  } else {
-    fetchAndPaintItems(showUi, getUserChoosedChanelsURLS);
-  }
+function renderFeed() {
+  fetchAndShowItems();
 }
 
 function main() {
-  showFontsUI(URLS, feed);
-  feed()
+  darkLightMode();
+  fakeSpa();
+  showBookMarks();
+  fetchAndShowChannelList(renderFeed);
+  renderFeed();
 }
 
 main();
-

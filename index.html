@@ -7,29 +7,34 @@
     <title>Vite App</title>
     <link rel="stylesheet" href="style.css" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
   </head>
   <body>
-    <header>
+    <header id="headerWeb">
       <h1 id="webTitle">Byte News</h1>
       <nav id="menu">
         <ul>
-          <li id="settings">Settings
-            <ul id="fuentes"></ul>
-          </li>
+          <li id="news" class="nav-item">News</li>
+          <li id="bookmarks" class="nav-item">Favorites</li>
+          <li id="settings" class="nav-item">Channels list</li>
+          <li><span id="darkMode" class="material-symbols-outlined nav-item"> dark_mode </span></li>
         </ul>
       </nav>
     </header>
-    <div id="fav"></div>
-    <div id="feed">
+    <div id="fav">
+      <h1 id="fav-message">No favorite news...</h1>
     </div>
-    <div id="loadingDots">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
+    <div id="feed"></div>
+    <div id="set">
+      <ul id="fuentes"></ul>
     </div>
- 
     <script type="module" src="/main.js"></script>
   </body>
 </html>
