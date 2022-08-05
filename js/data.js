@@ -1,7 +1,7 @@
 //Site using to parse rss to json.
 //https://rss2json.com/#rss_url=https%3A%2F%2Fgithub.com%2Fdjango%2Fdjango%2Freleases.atom
 
-import { showChannelsList, showNews } from "./js/Ui";
+import { showChannelsList, showNews } from "./Ui";
 
 export const CHANNELS_URLS = [
     "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2Fdailyjs&api_key=p2lpxmy5vpwurnjkynqeecnr3kva3hcbeny6olje&count=10",

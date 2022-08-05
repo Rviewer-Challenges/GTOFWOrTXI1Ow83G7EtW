@@ -1,4 +1,4 @@
-import { fetchAndShowItems, fetchAndShowChannelList } from "./data";
+import { fetchAndShowItems, fetchAndShowChannelList } from "./js/data";
 import { darkLightMode, fakeSpa, showBookMarks } from "./js/Ui";
 
 function renderFeed() {
