@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+.dark-mode {
+  background-color: black;
+  color: white;
+}
+
 header {
   display: flex;
   justify-content: space-evenly;
@@ -19,26 +24,29 @@ header {
   font-size: 1.6rem;
 }
 
-#settings:hover #fuentes{
-  display: block;
+#menu > ul > li:hover {
+  color: red;
 }
 
-#fuentes {
-  /* margin-top: 1rem; */
-  display: none;
-  position: absolute;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-  background-color: white;
+.nav-item {
+  cursor: pointer;
+}
+
+#set {
+  text-align: center;
 }
 
 .channelList {
   font-size: 1.3rem;
   list-style: none;
-  padding-top: 1rem;
+  padding-top: 4rem;
   padding-bottom: 1rem;
   padding-right: 2rem;
+  cursor: pointer;
+}
+
+#fuentes > li:hover {
+  color: red;
 }
 
 #webTitle {
@@ -59,6 +67,11 @@ header {
   border-radius: 25px;
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15), 0 10px 10px rgba(0, 0, 0, 0.1);
   margin-top: 3rem;
+}
+
+#linkImagen {
+  margin: 0px;
+  padding: 0px;
 }
 
 #imagen {
@@ -94,6 +107,12 @@ header {
 #fav-icon {
   padding-top: 1rem;
   cursor: pointer;
+  position: absolute;
+  margin-left: 27rem;
+}
+
+.subrallado {
+  text-decoration: underline;
 }
 
 #cardFooter {
@@ -114,6 +133,7 @@ header {
 
 .card-description {
   margin-top: 3rem;
+  border-bottom: 1px solid black;
 }
 
 .card-description > #description {
@@ -124,6 +144,13 @@ header {
   width: 900px;
   height: 300px;
   object-fit: cover;
+}
+
+#fav {
+  width: 900px;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 footer {
@@ -139,6 +166,11 @@ footer {
 
 .material-icons.red600 {
   color: red;
+  fill: 0;
+}
+
+.material-icons.yellow600 {
+  color: yellow;
   fill: 0;
 }
 

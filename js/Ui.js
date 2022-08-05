@@ -1,27 +1,26 @@
-export function showFontsUI(channelsArray, feed) {
+export function showChannelsList(channelsTitlesArray, feed) {
     const fuentes = document.getElementById("fuentes");
-    fuentes.id = "fuentes";
-    channelsArray.forEach(element => {
+    channelsTitlesArray.forEach(title => {
         const newFont = document.createElement("li");
-        newFont.innerHTML = element.channelName;
-        newFont.id = channelsArray.indexOf(element);
+        newFont.innerHTML = title;
         newFont.className = "channelList"
         newFont.addEventListener("click", () => {
             if (newFont.style.textDecoration == "") {
                 newFont.style.textDecoration = "line-through"
+                newFont.style.color = "red";
             } else if (newFont.style.textDecoration == "line-through") {
                 newFont.style.textDecoration = "";
+                newFont.style.color = "";
             };
             cleanFeed();
-            setTimeout(() => {
-                feed()
-            }, 2500);
+            feed()
         })
         fuentes.appendChild(newFont);
+        fuentes.style.display = "none";
     })
 }
 
-export function showUi(item) {
+export function showNews(item) {
     const feed = document.getElementById("feed");
 
     const card = document.createElement("div");
@@ -29,9 +28,16 @@ export function showUi(item) {
     card.id = idCard;
     card.className = "card";
 
+    const linkOnImage = document.createElement("a");
+    linkOnImage.href = item.link;
+    linkOnImage.target = "_blank";
+    linkOnImage.id = "linkImagen";
+
     const image = document.createElement("img");
     image.src = item.thumbnail;
     image.id = "imagen";
+
+    linkOnImage.appendChild(image);
 
     const content = document.createElement("div");
     content.id = "content";
@@ -40,10 +46,14 @@ export function showUi(item) {
     info.id = "info";
 
     const date = document.createElement("p");
+    const getDate = new Date(item.pubDate);
+    const getMonth = getDate.toLocaleString("en-US", { month: "short" });;
+    const getDay = getDate.getDate();
     date.id = "date";
-    date.innerHTML = "21 Jul";
-    const favIcon = document.createElement("span");
+    date.className = "dateCircle"
+    date.innerHTML = getMonth + ". " + getDay;
 
+    const favIcon = document.createElement("span");
     favIcon.id = "fav-icon";
     favIcon.className = "material-icons";
     favIcon.innerHTML = "favorite";
@@ -55,83 +65,124 @@ export function showUi(item) {
             card.classList.add("fav");
             const newFavItem = document.createElement("div");
             newFavItem.innerHTML = card.outerHTML;
-            newFavItem.id = idCard
-            favorites.appendChild(newFavItem);
+            newFavItem.id = idCard;
+            const favCard = card.cloneNode(true);
+            const getFavIcon = favCard.childNodes[1].childNodes[0].childNodes[1];
+            getFavIcon.addEventListener("click", () => {
+                favIcon.classList.remove("red600");
+                const getItemToRemove = document.getElementById(idCard.toString());
+                favorites.removeChild(getItemToRemove);
+                if (favorites.childNodes.length == 3) {
+                    document.getElementById("fav-message").style.display = "";
+                } else {
+                    document.getElementById("fav-message").style.display = "none";
+                }
+            })
+            favorites.appendChild(favCard);
         } else {
             favIcon.classList.remove("red600");
             const getItemToRemove = document.getElementById(idCard.toString());
             favorites.removeChild(getItemToRemove);
-}
+        }
     });
 
-info.appendChild(date);
-info.appendChild(favIcon);
+    info.appendChild(date);
+    info.appendChild(favIcon);
 
-const channelTitle = document.createElement("h2");
-channelTitle.innerHTML = item.channelTitle;
+    const channelTitle = document.createElement("h2");
+    channelTitle.innerHTML = item.channelTitle;
 
-const title = document.createElement("h1");
-title.innerHTML = item.title;
+    const title = document.createElement("h1");
+    title.id = "newsTitle";
+    title.innerHTML = item.title;
 
-const btnShow = document.createElement("p");
-btnShow.innerHTML = "Read more";
-btnShow.id = "btn-show";
+    content.appendChild(info);
+    content.appendChild(channelTitle);
+    content.appendChild(title);
 
-content.appendChild(info);
-content.appendChild(channelTitle);
-content.appendChild(title);
-content.appendChild(btnShow);
+    card.appendChild(linkOnImage);
+    card.appendChild(content);
 
-//CARD-DESCRIPTION
-const cardDescription = document.createElement("div");
-const idCardDescription = "desC" + item.guid;
-cardDescription.id = idCardDescription;
-cardDescription.className = "card-description";
-cardDescription.style.display = "none";
-
-const btnClose = document.createElement("span");
-btnClose.id = "btn-close";
-btnClose.className = "material-icons";
-btnClose.innerHTML = "close";
-
-const titleDescription = document.createElement("h1");
-titleDescription.innerHTML = item.title;
-
-const imageDescription = document.createElement("img");
-imageDescription.src = item.thumbnail;
-imageDescription.id = "imagenDesc";
-
-const description = document.createElement("p");
-description.id = "description";
-description.innerHTML = item.description;
-
-btnShow.addEventListener("click", () => {
-    document.getElementById(idCard.toString()).style.display = "none";
-    document.getElementById(idCardDescription.toString()).style.display = "";
-});
-
-btnClose.addEventListener("click", () => {
-    document.getElementById(idCardDescription.toString()).style.display = "none";
-    document.getElementById(idCard.toString()).style.display = "";
-});
-
-card.appendChild(image);
-card.appendChild(content);
-card.appendChild(cardDescription);
-
-cardDescription.appendChild(btnClose);
-cardDescription.appendChild(titleDescription);
-cardDescription.appendChild(imageDescription);
-cardDescription.appendChild(description);
-
-feed.appendChild(card);
-feed.appendChild(cardDescription);
-
+    feed.appendChild(card);
 }
 
-export function cleanFeed() {
+function cleanFeed() {
     const app = document.getElementById("feed");
     app.innerHTML = "";
 }
 
+export function showBookMarks() {
+    const bookmarks = document.getElementById("bookmarks")
+    const favSection = document.getElementById("fav");
+    const favMessage = document.getElementById("fav-message")
+
+    favMessage.style.display = "none";
+
+    bookmarks.addEventListener("click", () => {
+
+        if (favSection.childNodes.length == 3) {
+            document.getElementById("fav-message").style.display = "";
+        } else {
+            document.getElementById("fav-message").style.display = "none";
+        }
+    })
+}
+
+export function fakeSpa() {
+    const bookmarks = document.getElementById("bookmarks")
+    const favSection = document.getElementById("fav");
+    const settings = document.getElementById("set");
+    const navSettings = document.getElementById("settings");
+    const feed = document.getElementById("feed");
+    const news = document.getElementById("news");
+    const fuentes = document.getElementById("fuentes");
+
+    bookmarks.addEventListener("click", () => {
+        feed.style.display = "none";
+        favSection.style.display = "";
+        settings.style.display = "none";
+    })
+
+    news.addEventListener("click", () => {
+        feed.style.display = "";
+        favSection.style.display = "none";
+        settings.style.display = "none";
+    })
+
+    navSettings.addEventListener("click", () => {
+        feed.style.display = "none";
+        favSection.style.display = "none";
+        settings.style.display = "";
+        fuentes.style.display = "";
+    })
+}
+
+export function darkLightMode() {
+    document.getElementById("darkMode").addEventListener("click", () => {
+        if (document.body.style.backgroundColor != "black") {
+            document.body.style.backgroundColor = "black";
+            document.body.style.color = "white";
+
+            const getDateCircles = document.getElementsByClassName("dateCircle");
+            Array.from(getDateCircles).forEach(element => {
+                element.style.border = "1px solid white";
+            });
+
+            document.getElementById("darkMode").textContent = "light_mode";
+            document.getElementById("headerWeb").style.borderBottom = "1px solid white"
+
+        } else {
+            document.body.style.backgroundColor = "white";
+            document.body.style.color = "black";
+            document.getElementById("darkMode").textContent = "dark_mode";
+
+            const getDateCircles = document.getElementsByClassName("dateCircle");
+            Array.from(getDateCircles).forEach(element => {
+                element.style.border = "1px solid black";
+            });
+
+            document.getElementById("headerWeb").style.borderBottom = "1px solid black"
+        }
+    })
+}
 
